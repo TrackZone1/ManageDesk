@@ -13,3 +13,6 @@
   <li>Nettoyage du Fichier Téléchargement</li>
   <li>Retire les raccourcis des applications Steam sur le Bureau</li>
 </ul>
+
+
+<p>Donation BTC => 3DaixGbynWCYtsmLMdiydrsMUX2aELAkTC</p>
