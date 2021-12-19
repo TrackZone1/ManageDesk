@@ -24,6 +24,7 @@ var extname_pictures_list = [
 	"jpg",
 	"png",
 	"gif",
+	"webp",
 
 ];
 
