@@ -116,7 +116,7 @@ var windows_directory_list = [
 
 ];
 
-fs.readdir(desktopDir, (err, files) => {
+fs.readdir(windows_directory_list[0].directory, (err, files) => {
     files.forEach(file => {
         if (path.extname(file)) {
             /*
@@ -125,7 +125,7 @@ fs.readdir(desktopDir, (err, files) => {
 
   		*/
             if (path.extname(file).includes('url')) {
-                fs.unlinkSync(desktopDir + "/" + file);
+                fs.unlinkSync(windows_directory_list[0].directory + "/" + file);
                 console.log("Remove Steam Game Shortcut =>", file);
             }
 
@@ -147,7 +147,7 @@ fs.readdir(desktopDir, (err, files) => {
                                 fs.mkdirSync(wd.directory + "/" + extname.split(".")[0]);
                             }
 
-                            fs.rename(desktopDir + "/" + file, wd.directory + "/" + extname.split(".")[0] + "/" + file, function(err) {
+                            fs.rename(windows_directory_list[0].directory + "/" + file, wd.directory + "/" + extname.split(".")[0] + "/" + file, function(err) {
                                 if (err) throw err
                                 console.log('Move File to Windows Directory ' + wd.name + ' =>', file)
                             });
