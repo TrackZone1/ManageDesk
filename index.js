@@ -39,6 +39,9 @@ var windows_directory_list = [
             "jpg",
             "png",
             "gif",
+            "webp",
+            "apng",
+            "bmp"
 
         ]
     },
