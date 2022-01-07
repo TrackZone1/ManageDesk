@@ -4,15 +4,17 @@
 <img src="https://cdn.discordapp.com/attachments/902502946149912589/926435226526298162/unknown.png" alt="" style="max-width:80%;">
 
 <h4 align="left">Lien vers la version Compiler</h4>
-<a href="https://anonfiles.com/94c6w7o5x9/managedesk-win32-x64_rar" >https://anonfiles.com/94c6w7o5x9/managedesk-win32-x64_rar</a>
+<a href="https://www.mediafire.com/file/iv305u2gj9i05k6/managedesk-win32-x64.rar/file" >https://www.mediafire.com/file/iv305u2gj9i05k6/managedesk-win32-x64.rar/file</a>
 
 #
 
 <ul>
+  <li>Interface Moderne</li>
   <li>Rangement dans les fichiers par défaut de Windows</li>
   <li>Triage par extension</li>
   <li>Nettoyage du Fichier Téléchargement</li>
   <li>Retire les raccourcis des applications Steam sur le Bureau</li>
+  <li>Retire les fichiers vide de votre cache</li>
 </ul>
 
 
