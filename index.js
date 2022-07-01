@@ -14,18 +14,18 @@ var path = require('path');
 var fastFolderSize = require('fast-folder-size');
 
 const createWindow = () => {
-  const win = new BrowserWindow({
-    width: 1000,
-    height: 500,
-    autoHideMenuBar: true,
-    icon: __dirname + '/kawaii-folders.ico',  
-  })
+    const win = new BrowserWindow({
+        width: 1000,
+        height: 500,
+        autoHideMenuBar: true,
+        icon: __dirname + '/kawaii-folders.ico',
+    })
 
-  win.loadFile('main.html');
+    win.loadFile('main.html');
 }
 
 app.whenReady().then(() => {
-  createWindow()
+    createWindow()
 });
 
 var windows_directory_list = [
@@ -137,54 +137,54 @@ var windows_directory_list = [
 
 var cache_file_name_list = [
 
-"Roaming",
-"Local",
-"LocalLow"
+    "Roaming",
+    "Local",
+    "LocalLow"
 
 ];
 
 var message_list = [];
 
-function OrderDesk(foldername){
+function OrderDesk(foldername) {
 
-fs.readdir(homeDir + "/" + foldername, (err, files) => {
-    files.forEach(file => {
-        if (path.extname(file)) {
+    fs.readdir(homeDir + "/" + foldername, (err, files) => {
+        files.forEach(file => {
+            if (path.extname(file)) {
 
-            /*
-	
-			Manage Files 
+                /*
+    	
+                Manage Files 
+    
+                */
 
-  		    */
+                windows_directory_list.forEach(wd => {
 
-            windows_directory_list.forEach(wd => {
+                    if (wd.extname_list) {
 
-                if (wd.extname_list) {
+                        wd.extname_list.forEach(extname => {
 
-                    wd.extname_list.forEach(extname => {
+                            if (path.extname(file).includes(extname.toLowerCase())) {
 
-                        if (path.extname(file).includes(extname.toLowerCase())) {
+                                if (!fs.existsSync(wd.directory + "/" + extname.split(".")[0])) {
+                                    fs.mkdirSync(wd.directory + "/" + extname.split(".")[0]);
+                                }
 
-                            if (!fs.existsSync(wd.directory + "/" + extname.split(".")[0])) {
-                                fs.mkdirSync(wd.directory + "/" + extname.split(".")[0]);
+                                fs.rename(windows_directory_list[0].directory + "/" + file, wd.directory + "/" + extname.split(".")[0] + "/" + file, function (err) {
+                                    if (err) throw err
+                                    message_list.push(`<p class="text-success">Move <i class="fab fa-windows"></i> ${wd.name} <i class="fas fa-arrow-right"></i> ${file}</p>`);
+                                });
+
                             }
 
-                            fs.rename(windows_directory_list[0].directory + "/" + file, wd.directory + "/" + extname.split(".")[0] + "/" + file, function(err) {
-                                if (err) throw err
-                                message_list.push(`<p class="text-success">Move <i class="fab fa-windows"></i> ${wd.name} <i class="fas fa-arrow-right"></i> ${file}</p>`);
-                            });
+                        });
 
-                        }
+                    }
 
-                    });
+                });
 
-                }
-
-            });
-
-        }
+            }
+        });
     });
-});
 
 }
 /*
@@ -193,22 +193,22 @@ Clear Downloads Directory
 
 */
 
-function CDD(){
+function CDD() {
 
-fs.readdir(windows_directory_list[4].directory, async (err, files) => {
-    files.forEach(async file => {
-        if (path.extname(file)) {
-            await fs.unlinkSync(windows_directory_list[4].directory + "/" + file);
-            await message_list.push(`<p class="text-danger">Delete file <i class="fas fa-arrow-right"></i> ${file}</p>`);
-        } else {
-            await fs.rmSync(windows_directory_list[4].directory + "/" + file, {
-                recursive: true,
-                force: true
-            });
-            await message_list.push(`<p class="text-danger">Delete file <i class="fas fa-arrow-right"></i> ${file}</p>`);
-        }
+    fs.readdir(windows_directory_list[4].directory, async (err, files) => {
+        files.forEach(async file => {
+            if (path.extname(file)) {
+                await fs.unlinkSync(windows_directory_list[4].directory + "/" + file);
+                await message_list.push(`<p class="text-danger">Delete file <i class="fas fa-arrow-right"></i> ${file}</p>`);
+            } else {
+                await fs.rmSync(windows_directory_list[4].directory + "/" + file, {
+                    recursive: true,
+                    force: true
+                });
+                await message_list.push(`<p class="text-danger">Delete file <i class="fas fa-arrow-right"></i> ${file}</p>`);
+            }
+        });
     });
-});
 
 }
 
@@ -218,37 +218,37 @@ Remove Empty File Cache
 
 */
 
-function REFC(){
+function REFC() {
 
-cache_file_name_list.forEach(item => {
+    cache_file_name_list.forEach(item => {
 
-    fs.readdir(homeDir + "/AppData/" + item, (err, files) => {
-        files.forEach(file => {
-            if (!path.extname(file)) {
+        fs.readdir(homeDir + "/AppData/" + item, (err, files) => {
+            files.forEach(file => {
+                if (!path.extname(file)) {
 
-                if (file === "ElevatedDiagnostics") return false;
+                    if (file === "ElevatedDiagnostics") return false;
 
-                fastFolderSize(homeDir + "/AppData/" + item + "/" + file, (err, bytes) => {
-                  if (err) {
-                    throw err
-                  }
+                    fastFolderSize(homeDir + "/AppData/" + item + "/" + file, (err, bytes) => {
+                        if (err) {
+                            throw err
+                        }
 
-                    if (bytes === 0){
+                        if (bytes === 0) {
 
-                        fs.rmSync(homeDir + "/AppData/" + item + "/" + file, {
-                            recursive: true,
-                            force: true
-                        });
-                        message_list.push(`<p class="text-danger">Delete file <i class="fas fa-arrow-right"></i> ${file}</p>`);
-                    
-                    }
+                            fs.rmSync(homeDir + "/AppData/" + item + "/" + file, {
+                                recursive: true,
+                                force: true
+                            });
+                            message_list.push(`<p class="text-danger">Delete file <i class="fas fa-arrow-right"></i> ${file}</p>`);
 
-                });
-            }
+                        }
+
+                    });
+                }
+            });
         });
-    });
 
-});
+    });
 
 }
 
@@ -258,18 +258,18 @@ Remove Steam Game Shortcut
 
 */
 
-function RSGS(){
+function RSGS() {
 
-fs.readdir(windows_directory_list[0].directory, async (err, files) => {
-    files.forEach(async file => {
-        if (path.extname(file)) {
-            if (path.extname(file).includes('url')) {
-                fs.unlinkSync(windows_directory_list[0].directory + "/" + file);
-                message_list.push(`<p class="text-danger">Delete Steam Game Shortcut <i class="fas fa-arrow-right"></i> ${file}</p>`);
+    fs.readdir(windows_directory_list[0].directory, async (err, files) => {
+        files.forEach(async file => {
+            if (path.extname(file)) {
+                if (path.extname(file).includes('url')) {
+                    fs.unlinkSync(windows_directory_list[0].directory + "/" + file);
+                    message_list.push(`<p class="text-danger">Delete Steam Game Shortcut <i class="fas fa-arrow-right"></i> ${file}</p>`);
+                }
             }
-        }
+        });
     });
-});
 
 }
 
@@ -279,37 +279,37 @@ Remove Cache file
 
 */
 
-function RemoveCacheFile(filename_remove){
+function RemoveCacheFile(filename_remove) {
 
-cache_file_name_list.forEach(item => {
+    cache_file_name_list.forEach(item => {
 
-    fs.readdir(homeDir + "/AppData/" + item, (err, files) => {
-        files.forEach(file => {
-            if (!path.extname(file)) {
+        fs.readdir(homeDir + "/AppData/" + item, (err, files) => {
+            files.forEach(file => {
+                if (!path.extname(file)) {
 
-                if (file === "ElevatedDiagnostics") return false;
+                    if (file === "ElevatedDiagnostics") return false;
 
-                fastFolderSize(homeDir + "/AppData/" + item + "/" + file, (err, bytes) => {
-                  if (err) {
-                    throw err
-                  }
+                    fastFolderSize(homeDir + "/AppData/" + item + "/" + file, (err, bytes) => {
+                        if (err) {
+                            throw err
+                        }
 
-                    if (file.toLowerCase() === filename_remove.toLowerCase()){
+                        if (file.toLowerCase() === filename_remove.toLowerCase()) {
 
-                        fs.rmSync(homeDir + "/AppData/" + item + "/" + file, {
-                            recursive: true,
-                            force: true
-                        });
-                        message_list.push(`<p class="text-danger">Delete file <i class="fas fa-arrow-right"></i> ${file}</p>`);
-                    
-                    }
+                            fs.rmSync(homeDir + "/AppData/" + item + "/" + file, {
+                                recursive: true,
+                                force: true
+                            });
+                            message_list.push(`<p class="text-danger">Delete file <i class="fas fa-arrow-right"></i> ${file}</p>`);
 
-                });
-            }
+                        }
+
+                    });
+                }
+            });
         });
-    });
 
-});
+    });
 
 }
 
@@ -317,23 +317,23 @@ const express = require('express');
 const webapp = express();
 
 webapp.get('/clean', async function (req, res) {
-    if (req.query.cdf === "true"){
+    if (req.query.cdf === "true") {
         CDD();
     }
-    if (req.query.refc === "true"){
+    if (req.query.refc === "true") {
         REFC();
     }
-    if (req.query.rsgs === "true"){
+    if (req.query.rsgs === "true") {
         RSGS();
     }
-    if (req.query.reacc === "true"){
+    if (req.query.reacc === "true") {
         RemoveCacheFile("EasyAntiCheat")
     }
     res.send(`<div class="spinner-border text-warning" role="status"><span class="sr-only">Loading...</span></div>`);
 });
 
 webapp.get('/organise', async function (req, res) {
-    await OrderDesk(req.query.foldername);    
+    await OrderDesk(req.query.foldername);
 });
 
 webapp.get('/data', async function (req, res) {
@@ -342,7 +342,7 @@ webapp.get('/data', async function (req, res) {
         await res.send(message_list[message_list.length - 1]);
         await console.log(message_list[message_list.length - 1]);
         await message_list.pop();
-    }else{
+    } else {
         res.send("");
     }
 });
